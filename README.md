@@ -12,11 +12,15 @@ QR-code landing page for Level Up Cornhole's 4 development players. One page, tr
 | Rylan Brocket | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=rylan | `qrcodes/rylan_qr.png` |
 
 ## Layout
-- `index.html`: the whole page (images are base64 inline, no build step)
+- `index.html`: the whole page. Styles and the quiz script are inline; images load from `assets/img/`
+- `assets/img/`: web-sized photos, logo, favicon and link-preview image used by the page
 - `qrcodes/`: current QR codes. `qrcodes/old-claude-artifact/` has the retired ones that point at the old claude.ai link
 - `scripts/make_qr.py`: regenerates the QR codes and checks each one decodes to the right URL
 - `assets/source/`: uncropped coach photos and original logo, for re-cropping
-- `docs/HANDOFF.md`: full brief with Shopify handles and variant IDs, quiz logic, design tokens, crop coordinates, open TODOs
+- `docs/HANDOFF.md`: original brief with Shopify handles and variant IDs, quiz logic, crop coordinates, open TODOs. Its design section describes the first version (Anton + Work Sans, white theme, base64 images); the September 2026 redesign replaced that with a dark theme, Barlow Condensed + Barlow, action photo backgrounds and a full-screen quiz pop-up. Product data and quiz routing did not change.
+- `preview.html`: redirects to the main page (kept so old preview links still work)
+
+**Don't rename or move this repo.** The printed QR codes point at `/find-your-program/`, so a new name breaks every code.
 
 ## Deploying
 GitHub Pages serves `main` from the repo root. Push to `main` and it's live in about a minute.
