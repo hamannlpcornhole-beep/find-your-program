@@ -103,7 +103,7 @@
   .nav{position:fixed; inset:0 0 auto 0; z-index:60; transition:background .25s ease, box-shadow .25s ease, backdrop-filter .25s ease;}
   .nav.solid{background:rgba(11,11,12,.86); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 1px 0 var(--line);}
   .nav-inner{height:72px; display:flex; align-items:center; justify-content:space-between; gap:20px;}
-  .nav-logo{display:inline-flex; align-items:center; min-width:44px; min-height:44px;}
+  .nav-logo{display:inline-flex; align-items:center; min-width:48px; min-height:48px;}
   .nav-logo img{height:48px; width:auto;}
   .nav-right{display:flex; align-items:center; gap:30px;}
   .nav-links{display:none; gap:28px;}
@@ -194,7 +194,7 @@
   .programs{background:var(--paper); color:var(--paper-ink); position:relative; overflow:hidden;}
   .programs .kicker{color:var(--orange);}
   .programs .sub{color:var(--paper-muted);}
-  .programs .sub a{display:inline-block; padding:11px 0; margin:-11px 0; color:var(--orange); font-weight:700; border-bottom:2px solid rgba(243,108,33,.35); cursor:pointer;}
+  .programs .sub a{display:inline-block; padding:13px 0; margin:-13px 0; color:var(--orange); font-weight:700; border-bottom:2px solid rgba(243,108,33,.35); cursor:pointer;}
   .board-deco{position:absolute; right:-120px; bottom:-160px; width:420px; height:760px; border:3px solid rgba(20,20,20,.05); border-radius:18px; transform:rotate(-24deg); pointer-events:none;}
   .board-deco::after{content:""; position:absolute; left:50%; top:22%; width:150px; height:150px; margin-left:-75px; border-radius:50%; border:3px solid rgba(243,108,33,.14);}
   .plans{display:grid; gap:20px; align-items:stretch; position:relative;}
@@ -285,7 +285,7 @@
   .foot{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:20px;}
   .foot img{height:56px; width:auto;}
   .foot-links{display:flex; gap:24px; flex-wrap:wrap;}
-  .foot-links a{display:inline-flex; align-items:center; min-height:44px; font-family:var(--display); font-weight:700; font-size:16px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted);}
+  .foot-links a{display:inline-flex; align-items:center; min-height:48px; font-family:var(--display); font-weight:700; font-size:16px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted);}
   .foot-links a:hover{color:#fff;}
   .foot-copy{margin-top:22px; font-size:13px; color:#6d6d72;}
 
@@ -309,7 +309,7 @@
   .quiz-wrap > *{position:relative;}
   .quiz-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:22px;}
   .quiz-top img{height:44px; width:auto;}
-  .quiz-close{width:42px; height:42px; border-radius:50%; border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.04); color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;}
+  .quiz-close{width:48px; height:48px; border-radius:50%; border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.04); color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;}
   .quiz-close:hover{background:rgba(255,255,255,.12);}
   .quiz-close svg{width:18px; height:18px;}
   #landing{display:none;}
@@ -361,7 +361,7 @@
 
   /* MENU BUTTON (phones) */
   .menu-btn{
-    display:inline-flex; align-items:center; gap:10px; min-height:46px; padding:0 16px 0 14px; border-radius:12px;
+    display:inline-flex; align-items:center; gap:10px; min-height:48px; padding:0 16px 0 14px; border-radius:12px;
     border:1px solid rgba(255,255,255,.2); background:rgba(11,11,12,.45); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
     color:#fff; font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:.1em; text-transform:uppercase; cursor:pointer;
   }
@@ -525,7 +525,7 @@
     .quiz-wrap{min-height:100%; border:0; border-radius:0; box-shadow:none; padding:calc(12px + env(safe-area-inset-top)) 20px calc(28px + env(safe-area-inset-bottom));}
     .quiz-top{margin-bottom:18px;}
     .opt{min-height:62px;}
-    .back-link{min-height:44px;}
+    .back-link{min-height:48px;}
   }
 
   /* reveal on scroll */
