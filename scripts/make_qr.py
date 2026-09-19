@@ -1,4 +1,4 @@
-"""Regenerate the 4 dev player QR codes.
+"""Regenerate the QR codes for the 4 dev players and 5 coaches.
 
 Usage:
   python3 -m venv .venv && .venv/bin/pip install "qrcode[pil]" opencv-python-headless
@@ -10,7 +10,7 @@ import cv2
 import qrcode
 
 BASE_URL = "https://hamannlpcornhole-beep.github.io/find-your-program/"
-PLAYERS = ["brandie", "kenneth", "simon", "rylan"]
+PLAYERS = ["brandie", "kenneth", "simon", "rylan", "richard", "colin", "aj", "hunter", "peyton"]
 OUT = Path(__file__).resolve().parent.parent / "qrcodes"
 
 for name in PLAYERS:

@@ -1,6 +1,6 @@
 # Find Your Program: Dev Player QR Page
 
-QR-code landing page for Level Up Cornhole's 4 development players. One page, tracked by `?ref=`, no discount codes. Every product link on the page gets `utm_source=qr&utm_medium=devplayer&utm_campaign={ref}`.
+QR-code landing page for Level Up Cornhole's 4 development players and 5 coaches. One page, tracked by `?ref=`, no discount codes. Every product link on the page gets `utm_source=qr&utm_medium=devplayer&utm_campaign={ref}`.
 
 **Live:** https://hamannlpcornhole-beep.github.io/find-your-program/
 
@@ -10,6 +10,11 @@ QR-code landing page for Level Up Cornhole's 4 development players. One page, tr
 | Kenneth Boucher | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=kenneth | `qrcodes/kenneth_qr.png` |
 | Simon Ballard | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=simon | `qrcodes/simon_qr.png` |
 | Rylan Brocket | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=rylan | `qrcodes/rylan_qr.png` |
+| Richard Nyberg (coach) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=richard | `qrcodes/richard_qr.png` |
+| Colin Hodet (coach) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=colin | `qrcodes/colin_qr.png` |
+| AJ Sims (coach) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=aj | `qrcodes/aj_qr.png` |
+| Hunter Thorson (coach) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=hunter | `qrcodes/hunter_qr.png` |
+| Peyton Haynes (coach) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=peyton | `qrcodes/peyton_qr.png` |
 
 ## Layout
 - `index.html`: the whole page. Styles and the quiz script are inline; images load from `assets/img/`
