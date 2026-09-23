@@ -15,6 +15,7 @@ QR-code landing page for Level Up Cornhole's 4 development players and 5 coaches
 | AJ Sims (coach) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=aj | `qrcodes/aj_qr.png` |
 | Hunter Thorson (coach) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=hunter | `qrcodes/hunter_qr.png` |
 | Peyton Haynes (coach) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=peyton | `qrcodes/peyton_qr.png` |
+| General (no person) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=general | `qrcodes/general_qr.png` |
 
 ## Layout
 - `index.html`: the whole page. Styles and the quiz script are inline; images load from `assets/img/`

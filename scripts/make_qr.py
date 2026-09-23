@@ -10,7 +10,7 @@ import cv2
 import qrcode
 
 BASE_URL = "https://hamannlpcornhole-beep.github.io/find-your-program/"
-PLAYERS = ["brandie", "kenneth", "simon", "rylan", "richard", "colin", "aj", "hunter", "peyton"]
+PLAYERS = ["brandie", "kenneth", "simon", "rylan", "richard", "colin", "aj", "hunter", "peyton", "general"]
 OUT = Path(__file__).resolve().parent.parent / "qrcodes"
 
 for name in PLAYERS:
