@@ -53,6 +53,7 @@ PEOPLE = [
     ("kenneth", "Kenneth Boucher", "Development players", "Development player"),
     ("simon", "Simon Ballard", "Development players", "Development player"),
     ("rylan", "Rylan Brockett", "Development players", "Development player"),
+    ("colt", "Colt Kenner", "Development players", "Development player"),
     ("richard", "Richard Nyberg", "Coaches", "Coach. Complete game development"),
     ("colin", "Colin Hodet", "Coaches", "Coach. Precision and shot making"),
     ("aj", "AJ Sims", "Coaches", "Coach. Competition focused"),

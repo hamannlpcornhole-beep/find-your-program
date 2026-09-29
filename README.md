@@ -10,6 +10,7 @@ QR-code landing page for Level Up Cornhole's 4 development players and 5 coaches
 | Kenneth Boucher | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=kenneth | `qrcodes/kenneth_qr.png` |
 | Simon Ballard | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=simon | `qrcodes/simon_qr.png` |
 | Rylan Brockett | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=rylan | `qrcodes/rylan_qr.png` |
+| Colt Kenner | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=colt | `qrcodes/colt_qr.png` |
 | Richard Nyberg (coach) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=richard | `qrcodes/richard_qr.png` |
 | Colin Hodet (coach) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=colin | `qrcodes/colin_qr.png` |
 | AJ Sims (coach) | https://hamannlpcornhole-beep.github.io/find-your-program/?ref=aj | `qrcodes/aj_qr.png` |
