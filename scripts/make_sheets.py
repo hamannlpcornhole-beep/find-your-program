@@ -48,12 +48,22 @@ bodyb = lambda s: _font("Barlow-Bold.ttf", "Arial Bold.ttf", s)
 
 LOGO = Image.open(REPO / "assets/source/level_up_logo_original.png").convert("RGBA")
 
+# people whose sales go back into their own season instead of just being tracked
+SPONSORED = {
+    "colt": [
+        "Every sale off your code this season goes toward you. Bags, gear, entry fees, travel.",
+        "It also pays for building your name. Shirts, banners, photos, all of it.",
+        "Gavin tracks what your code brings in and goes over it with you.",
+        "The more people you get to scan it, the more you have to work with.",
+    ],
+}
+
 PEOPLE = [
     ("brandie", "Brandie McCuen", "Development players", "Development player"),
     ("kenneth", "Kenneth Boucher", "Development players", "Development player"),
     ("simon", "Simon Ballard", "Development players", "Development player"),
     ("rylan", "Rylan Brockett", "Development players", "Development player"),
-    ("colt", "Colt Kenner", "Development players", "Development player"),
+    ("colt", "Colt Kenner", "Sponsored players", "Sponsored player"),
     ("richard", "Richard Nyberg", "Coaches", "Coach. Complete game development"),
     ("colin", "Colin Hodet", "Coaches", "Coach. Precision and shot making"),
     ("aj", "AJ Sims", "Coaches", "Coach. Competition focused"),
@@ -275,6 +285,7 @@ def handout(key, name, role, out):
             "Your link carries your name to the store, so Gavin can see which sales came off your code.",
             "If they type the plain web address instead of scanning, the credit is gone. Have them scan.",
         ]),
+        ("WHERE YOUR SALES GO", SPONSORED[key]) if key in SPONSORED else
         ("WHAT IT IS NOT", [
             "It is not a discount. Nobody gets money off for scanning your code.",
             "It is not a login. The page works on any phone with no app and no account.",
@@ -301,15 +312,15 @@ def handout(key, name, role, out):
     d.text((M + 80, qy + 16), "Keep it short. The page does the selling.", font=body(46),
            fill=(168, 168, 176))
 
-    y = box[3] + 130
+    y = box[3] + 100
     d.text((M, y), "IF SOMETHING LOOKS WRONG", font=dispb(62), fill=INK)
     d.line([M, y + 92, M + 260, y + 92], fill=ORANGE, width=8)
-    para(d, M, y + 150, "Text Gavin. The page and the code can be fixed in about a minute.",
-         body(50), (60, 60, 68), W - M * 2, 62)
+    y = para(d, M, y + 150, "Text Gavin. The page and the code can be fixed in about a minute.",
+             body(50), (60, 60, 68), W - M * 2, 62)
 
-    # a short checklist to close the page out
-    y = H - 830
-    d.rounded_rectangle([M, y, W - M, H - 300], radius=44, fill=SOFT, outline=LINE, width=3)
+    # a short checklist to close the page out, pushed down if the page above it ran long
+    y = min(max(y + 50, H - 830), H - 760)
+    d.rounded_rectangle([M, y, W - M, y + 530], radius=44, fill=SOFT, outline=LINE, width=3)
     d.text((M + 80, y + 60), "BEFORE YOUR NEXT EVENT", font=dispb(56), fill=ORANGE)
     cy = y + 160
     for it in ["The code is saved on your phone",
@@ -352,7 +363,7 @@ def contact_sheet(out):
         while tw(d, t, f) > colw - 40:
             f = disp(f.size - 4)
         d.text((cx - tw(d, t, f) // 2, cy + qr.height + 72), t, font=f, fill=INK)
-        sub = {"Development players": "Development player", "Coaches": "Coach"}.get(grp, "No name on it")
+        sub = role.split(".")[0]
         g = body(42)
         d.text((cx - tw(d, sub, g) // 2, cy + qr.height + 136), sub, font=g, fill=MUTED)
 
@@ -393,7 +404,8 @@ def overview(out):
 
     y = section(d, M, y + 80, "WHAT IS IN HERE", W - M * 2)
     y = bullets(d, M, y, [
-        "People. One folder per person, split into development players, coaches and the general code. "
+        "People. One folder per person, split into development players, sponsored players, coaches "
+        "and the general code. "
         "Each folder holds their QR code, a print sheet to tape up and a how it works handout.",
         "All links and QR codes. Every link in one text file, ready to copy and paste.",
         "All QR codes on one page. Every code on a single sheet.",
