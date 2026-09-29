@@ -22,6 +22,8 @@ QR-code landing page for Level Up Cornhole's 4 development players and 5 coaches
 - `assets/img/`: web-sized photos, logo, favicon and link-preview image used by the page
 - `qrcodes/`: current QR codes. `qrcodes/old-claude-artifact/` has the retired ones that point at the old claude.ai link
 - `scripts/make_qr.py`: regenerates the QR codes and checks each one decodes to the right URL
+- `scripts/make_sheets.py`: builds the print sheets, the how-it-works handouts, the all-codes sheet
+  and the START HERE guide into `../People/` and the Development Program folder (needs Pillow)
 - `assets/source/`: uncropped coach photos and original logo, for re-cropping
 - `docs/HANDOFF.md`: original brief with Shopify handles and variant IDs, quiz logic, crop coordinates, open TODOs. Its design section describes the first version (Anton + Work Sans, white theme, base64 images); the September 2026 redesign replaced that with a dark theme, Barlow Condensed + Barlow, action photo backgrounds and a full-screen quiz pop-up. Product data and quiz routing did not change.
 - `preview.html`: redirects to the main page (kept so old preview links still work)
