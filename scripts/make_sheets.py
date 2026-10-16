@@ -16,8 +16,7 @@ from PIL import Image, ImageDraw, ImageFont
 REPO = Path(__file__).resolve().parent.parent
 PEOPLE_ROOT = REPO.parent / "People"
 QRS = REPO / "qrcodes"
-FONTS = Path("/private/tmp/claude-501/-Users-gavinhamann-Desktop-Level-Up-Cornhole/"
-             "f1a79b69-d649-4c18-9b55-affa24ad3f19/scratchpad/fonts")
+FONTS = Path("/private/tmp/claude-501/-Users-gavinhamann-Desktop-Level-Up-Cornhole/100cd064-af0e-4583-bf7f-7aa8eee6f65d/scratchpad/fonts")
 SYS = Path("/System/Library/Fonts/Supplemental")
 BASE = "https://hamannlpcornhole-beep.github.io/find-your-program/"
 SHOP = "levelupcornhole.shop"
@@ -67,8 +66,8 @@ PEOPLE = [
     ("richard", "Richard Nyberg", "Coaches", "Coach. Complete game development"),
     ("colin", "Colin Hodet", "Coaches", "Coach. Precision and shot making"),
     ("aj", "AJ Sims", "Coaches", "Coach. Competition focused"),
-    ("hunter", "Hunter Thorson", "Coaches", "Coach. One on one sessions"),
-    ("peyton", "Peyton Haynes", "Coaches", "Coach"),
+    ("hunter", "Hunter Thorson", "Coaches", "Coach. HUNTHROW: throw, read, perform"),
+    ("payton", "Payton Haynes", "Coaches", "Coach. Mechanics and mindset"),
     ("general", "General code", "General", "No name on it"),
 ]
 

@@ -239,7 +239,8 @@
   .coaches .hero-glow{left:auto; right:-420px; top:-300px; bottom:auto; opacity:.6;}
   .coach-grid{display:grid; grid-template-columns:1fr; gap:18px;}
   @media (min-width:560px){ .coach-grid{grid-template-columns:1fr 1fr;} }
-  @media (min-width:1040px){ .coach-grid{grid-template-columns:repeat(4,1fr);} }
+  @media (min-width:1040px){ .coach-grid{grid-template-columns:repeat(3,1fr);} }
+  @media (min-width:1180px){ .coach-grid{grid-template-columns:repeat(5,1fr);} }
   .coach{background:var(--ink-3); border:1px solid var(--line); border-radius:18px; overflow:hidden; display:flex; flex-direction:column; transition:transform .2s ease, border-color .2s ease;}
   .coach:hover{transform:translateY(-5px); border-color:rgba(243,108,33,.5);}
   .coach-media{position:relative; aspect-ratio:1/1; overflow:hidden; background:#222;}
@@ -512,7 +513,7 @@
         <div class="kicker">Coaches</div>
         <h2 class="display">Meet your<br><span class="hot">coaches</span></h2>
       </div>
-      <p class="sub">They compete at the ACL Pro level. Now they coach you.</p>
+      <p class="sub">Five coaches who compete at the ACL Pro level. Now they coach you.</p>
     </div>
     <div class="coach-grid">
       <div class="coach reveal">
@@ -561,13 +562,27 @@
         <div class="coach-media">
           <img src="assets/img/coach-hunter.jpg" alt="Hunter Thorson" width="480" height="480" loading="lazy">
           <img class="action" src="assets/img/action-hunter.jpg" alt="" width="600" height="600" loading="lazy">
-          <div class="coach-name"><div class="nick">&nbsp;</div><h3>Hunter Thorson</h3></div>
+          <div class="coach-name"><div class="nick">HUNTHROW</div><h3>Hunter Thorson</h3></div>
         </div>
         <div class="coach-body">
-          <div class="spec">1-on-1 coaching</div>
-          <p>Personalized coaching from Hunter.</p>
-          <div class="soon">Pro tier coming soon. Train with him now through Compete.</div>
-          <a class="btn btn-ghost btn-block" id="cta-coach-hunter" target="_top">Get Compete w/ Hunter</a>
+          <div class="spec">Throw · Read · Perform</div>
+          <p>Sharpen the throw you already have, then learn to read the board.</p>
+          <a class="btn btn-primary btn-block" id="cta-coach-hunter" target="_top">View coach</a>
+          <div class="also-row" style="margin-top:10px; text-align:center;">One-time session? <a href="#" id="cta-onetime-hunter" target="_top">Book a call</a></div>
+        </div>
+      </div>
+
+      <div class="coach reveal">
+        <div class="coach-media">
+          <img src="assets/img/coach-payton.jpg" alt="Payton Haynes" width="480" height="480" loading="lazy">
+          <img class="action" src="assets/img/action-payton.jpg" alt="" width="600" height="600" loading="lazy">
+          <div class="coach-name"><div class="nick">Payton's Playbook</div><h3>Payton Haynes</h3></div>
+        </div>
+        <div class="coach-body">
+          <div class="spec">Mechanics &amp; mindset</div>
+          <p>Know your game, build your options, trust your next throw.</p>
+          <a class="btn btn-primary btn-block" id="cta-coach-payton" target="_top">View coach</a>
+          <div class="also-row" style="margin-top:10px; text-align:center;">One-time session? <a href="#" id="cta-onetime-payton" target="_top">Book a call</a></div>
         </div>
       </div>
     </div>
@@ -740,12 +755,14 @@
       base: DOMAIN + '/products/compete-membership',
       name: 'Compete Membership',
       price: '$45/mo',
-      variants: { richard:'48264900608222', colin:'48619376279774', aj:'48619376312542', hunter:'48619376345310' }
+      variants: { richard:'48264900608222', colin:'48619376279774', aj:'48619376312542', hunter:'48619376345310', payton:'49225976447198' }
     },
     pro: {
       richard: { url: DOMAIN + '/products/elite-plan-19-99-month-copy', name: 'Pro Plan w/ Richard Nyberg' },
       colin: { url: DOMAIN + '/products/roll-king-development', name: 'Roll King Development w/ Colin Hodet' },
-      aj: { url: DOMAIN + '/products/ajency-monthly', name: 'AJency Monthly w/ AJ Sims' }
+      aj: { url: DOMAIN + '/products/ajency-monthly', name: 'AJency Monthly w/ AJ Sims' },
+      hunter: { url: DOMAIN + '/products/hunthrow-monthly-w-hunter-thorson-100-month', name: 'HUNTHROW Monthly w/ Hunter Thorson' },
+      payton: { url: DOMAIN + '/products/paytons-playbook-monthly', name: "Payton's Playbook Monthly w/ Payton Haynes" }
     },
     oneTimeCoach: {
       richard: {
@@ -761,11 +778,16 @@
         review: { url: DOMAIN + '/products/aj-video-game-review-call', name: 'AJ Sims — Video Review + Call', price: '$75 one-time' }
       },
       hunter: {
-        call: { url: DOMAIN + '/products/hunter-thorson-1-hour-session', name: 'Hunter Thorson — 1 Hour Session', price: '$45 one-time' }
+        call: { url: DOMAIN + '/products/hunter-thorson-1-hour-session', name: 'Hunter Thorson — Throw Tune-Up', price: '$50 one-time' },
+        review: { url: DOMAIN + '/products/hunter-thorson-read-perform-breakdown', name: 'Hunter Thorson — Read & Perform Breakdown', price: '$75 one-time' }
+      },
+      payton: {
+        call: { url: DOMAIN + '/products/paytons-playbook-session', name: "Payton Haynes — Playbook Session", price: '$50 one-time' },
+        review: { url: DOMAIN + '/products/paytons-playbook-game-breakdown', name: "Payton Haynes — Personal Game Breakdown", price: '$75 one-time' }
       }
     }
   };
-  const COACH_NAMES = { richard:'Richard Nyberg', colin:'Colin Hodet', aj:'AJ Sims', hunter:'Hunter Thorson' };
+  const COACH_NAMES = { richard:'Richard Nyberg', colin:'Colin Hodet', aj:'AJ Sims', hunter:'Hunter Thorson', payton:'Payton Haynes' };
 
   function populateLinks(){
     document.getElementById('cta-elite').href = utmUrl(PRODUCTS.elite.url, ref);
@@ -775,7 +797,10 @@
     document.getElementById('cta-coach-richard').href = utmUrl(PRODUCTS.pro.richard.url, ref);
     document.getElementById('cta-coach-colin').href = utmUrl(PRODUCTS.pro.colin.url, ref);
     document.getElementById('cta-coach-aj').href = utmUrl(PRODUCTS.pro.aj.url, ref);
-    document.getElementById('cta-coach-hunter').href = utmUrl(PRODUCTS.compete.base, ref, PRODUCTS.compete.variants.hunter);
+    document.getElementById('cta-coach-hunter').href = utmUrl(PRODUCTS.pro.hunter.url, ref);
+    document.getElementById('cta-coach-payton').href = utmUrl(PRODUCTS.pro.payton.url, ref);
+    document.getElementById('cta-onetime-hunter').href = utmUrl(PRODUCTS.oneTimeCoach.hunter.call.url, ref);
+    document.getElementById('cta-onetime-payton').href = utmUrl(PRODUCTS.oneTimeCoach.payton.call.url, ref);
     document.getElementById('cta-onetime-richard').href = utmUrl(PRODUCTS.oneTimeCoach.richard.call.url, ref);
     document.getElementById('cta-onetime-colin').href = utmUrl(PRODUCTS.oneTimeCoach.colin.call.url, ref);
     document.getElementById('cta-onetime-aj').href = utmUrl(PRODUCTS.oneTimeCoach.aj.call.url, ref);
@@ -917,10 +942,7 @@
     }
     else if (state.style === 'intensive') {
       const c = (state.coach && state.coach !== 'match') ? state.coach : 'richard';
-      if (c === 'hunter') {
-        html = resultBlock("Hunter's Pro Coaching", 'Coming soon', "Hunter's 1-on-1 program isn't live yet. In the meantime, Compete Membership gets you monthly calls with him right now.",
-          'Get Compete w/ Hunter', utmUrl(PRODUCTS.compete.base, ref, PRODUCTS.compete.variants.hunter));
-      } else {
+      {
         const p = PRODUCTS.pro[c];
         const desc = "Ongoing 1-on-1 coaching with "+COACH_NAMES[c]+" — a complete system built around your full game, not a quick fix.";
         html = resultBlock(p.name, '$100/mo', desc, 'Get ' + p.name.split(' w/')[0], utmUrl(p.url, ref));
@@ -951,7 +973,7 @@
 <script>
   // Page chrome: ref chip, nav, sticky CTA, scroll reveals, quiz overlay close keys
   (function(){
-    var PLAYERS = { brandie:'Brandie McCuen', kenneth:'Kenneth Boucher', simon:'Simon Ballard', rylan:'Rylan Brockett', colt:'Colt Kenner', richard:'Richard Nyberg', colin:'Colin Hodet', aj:'AJ Sims', hunter:'Hunter Thorson', peyton:'Peyton Haynes' };
+    var PLAYERS = { brandie:'Brandie McCuen', kenneth:'Kenneth Boucher', simon:'Simon Ballard', rylan:'Rylan Brockett', colt:'Colt Kenner', richard:'Richard Nyberg', colin:'Colin Hodet', aj:'AJ Sims', hunter:'Hunter Thorson', payton:'Payton Haynes', peyton:'Payton Haynes' };
     var r = (new URLSearchParams(location.search).get('ref') || '').toLowerCase();
     if (PLAYERS[r]) { document.getElementById('refName').textContent = PLAYERS[r]; document.getElementById('refChip').hidden = false; }
 

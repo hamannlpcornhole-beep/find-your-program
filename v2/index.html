@@ -874,7 +874,7 @@
   const KLAVIYO_REVISION   = '2025-07-15';      // Klaviyo API revision
   const META_PIXEL_ID      = '';                // paste your Meta Pixel ID, or leave blank to skip
   const PRIVACY_URL        = 'https://levelupcornhole.shop/policies/privacy-policy';
-  const DEV_PLAYER_REFS    = ['brandie','kenneth','simon','rylan','colt','richard','colin','aj','hunter','peyton'];
+  const DEV_PLAYER_REFS    = ['brandie','kenneth','simon','rylan','colt','richard','colin','aj','hunter','payton','peyton'];
 
   /* --------------------------------------------------------------- */
 
@@ -916,7 +916,7 @@
       base: DOMAIN + '/products/compete-membership',
       name: 'Compete Membership',
       price: '$45/mo',
-      variants: { richard:'48264900608222', colin:'48619376279774', aj:'48619376312542', hunter:'48619376345310' }
+      variants: { richard:'48264900608222', colin:'48619376279774', aj:'48619376312542', hunter:'48619376345310', payton:'49225976447198' }
     },
     pro: {
       richard: { url: DOMAIN + '/products/elite-plan-19-99-month-copy', name: 'Pro Plan w/ Richard Nyberg' },
@@ -1004,14 +1004,14 @@
     line: 'colin', flat: 'colin', airmail: 'colin',
     blockpush: 'aj',
     grip: 'hunter',
-    mental: 'payton'
+    mental: 'mental'   // scored for AJ and Payton, split below
   };
   const MATCH_REASON = {
     colin: 'he rebuilds line and airmail shots from the launch up',
-    aj: 'he coaches tournament prep and real matchups',
+    aj: 'he coaches tournament prep, pressure and real matchups',
     richard: 'he rebuilds the full game from the release out',
     hunter: 'he starts with your grip, stance and release, then builds around it',
-    payton: 'she coaches the mental side: confidence, routine and bouncing back'
+    payton: "she's a psychology major and goes deepest on the mental side: confidence, routine and bouncing back"
   };
   const TESTIMONIAL = '"Best $100 I\'ve ever spent. Went from a 7 to a 9." — Compete Member';
 
@@ -1193,17 +1193,37 @@
     if (c && c !== 'match') return c;
     const picks = problems();
     const score = {richard: 0, colin: 0, aj: 0, hunter: 0, payton: 0};
-    picks.forEach(function(p){ const coach = PROBLEM_COACH[p]; if (coach) score[coach] += 1; });
+    const competitive = (state.goal === 'acl') || (state.goal === 'local' && (state.level === 'comp' || state.level === 'acl'));
+    picks.forEach(function(p){
+      const coach = PROBLEM_COACH[p];
+      if (coach === 'mental') { score[competitive ? 'aj' : 'payton'] += 1; return; }
+      if (coach) score[coach] += 1;
+    });
     if (state.goal === 'local' && (state.level === 'comp' || state.level === 'acl')) score.aj += 1;
     const COACH_ORDER = ['richard','colin','aj','hunter','payton'];
     let best = null, bestScore = -1;
     COACH_ORDER.forEach(function(k){ if (score[k] > bestScore) { bestScore = score[k]; best = k; } });
     const tied = COACH_ORDER.filter(function(k){ return score[k] === bestScore; });
     if (tied.length > 1) {
-      const first = picks.map(function(p){ return PROBLEM_COACH[p]; }).filter(function(k){ return tied.indexOf(k) !== -1; })[0];
+      const first = picks.map(function(p){
+        const k = PROBLEM_COACH[p];
+        return k === 'mental' ? (competitive ? 'aj' : 'payton') : k;
+      }).filter(function(k){ return tied.indexOf(k) !== -1; })[0];
       return first || tied[0];
     }
     return bestScore > 0 ? best : 'richard';
+  }
+  function mentalAltLine(coach, res){
+    if (problems().indexOf('mental') === -1) return '';
+    if (coach === 'aj') {
+      return '<div class="also-row">Want deeper mental-game work? <a href="' + utmUrl(PRODUCTS.compete.base, PRODUCTS.compete.variants.payton, res) +
+        '" target="_top" data-product="compete_payton">Payton Haynes is a psychology major</a> and coaches that side.</div>';
+    }
+    if (coach === 'payton') {
+      return '<div class="also-row">Want tournament prep with it? <a href="' + utmUrl(PRODUCTS.compete.base, PRODUCTS.compete.variants.aj, res) +
+        '" target="_top" data-product="compete_aj">AJ Sims coaches pressure and matchups</a>.</div>';
+    }
+    return '';
   }
   function matchedLine(coach){
     if (state.coach && state.coach !== 'match') return '';
@@ -1317,7 +1337,7 @@
       if (state.onetime === 'call') return {result: 'call', coach: coach};
       if (state.onetime === 'both') return {result: 'review_call', coach: coach};
     }
-    if (state.style === 'structured') return {result: coach === 'payton' ? 'pro' : 'compete', coach: coach};
+    if (state.style === 'structured') return {result: 'compete', coach: coach};
     if (state.style === 'intensive') return {result: 'pro', coach: coach};
     return {result: 'elite', coach: ''};
   }
@@ -1340,7 +1360,7 @@
     return '<div class="result-eyebrow">YOUR BEST MATCH</div>' +
       '<div class="result-name">' + o.name + '</div>' +
       '<div class="result-price">' + o.price + '</div>' +
-      playback + diagnosis + (o.matched || '') +
+      playback + diagnosis + (o.matched || '') + (o.mentalAlt || '') +
       '<div class="result-desc">' + o.desc + '</div>' +
       start +
       '<a class="btn btn-primary btn-block" href="' + o.ctaUrl + '" target="_top" data-product="' + o.result + '">' + o.ctaText + '</a>' +
@@ -1389,22 +1409,13 @@
         });
       }
     }
-    else if (state.style === 'structured' && coach === 'payton') {
-      const p = PRODUCTS.pro.payton;
-      html = resultBlock({
-        name: "Payton's Playbook Monthly", price: '$100/mo', result: res,
-        desc: "Personalized 1-on-1 coaching with Payton Haynes — mechanics, shot options, strategy and the mental side. Payton doesn't have a $45 monthly option, this is her program.",
-        ctaText: "Get Payton's Playbook", ctaUrl: utmUrl(p.url, null, res), matched: matchedLine(coach),
-        secondary: '<div class="also-row">Want the $45/mo option? <a href="' + utmUrl(PRODUCTS.compete.base, null, res) + '" target="_top" data-product="compete">Compete with another coach</a></div>'
-      });
-    }
     else if (state.style === 'structured') {
       const variant = PRODUCTS.compete.variants[coach];
       const pro = PRODUCTS.pro[coach];
       html = resultBlock({
         name: 'Compete Membership w/ ' + COACH_NAMES[coach], price: PRODUCTS.compete.price, result: res,
         desc: "Full training library, weekly drills, stat tracking, and one 30-minute call a month with " + COACH_NAMES[coach] + ".",
-        ctaText: 'Get Compete', ctaUrl: utmUrl(PRODUCTS.compete.base, variant, res), matched: matchedLine(coach),
+        ctaText: 'Get Compete', ctaUrl: utmUrl(PRODUCTS.compete.base, variant, res), matched: matchedLine(coach), mentalAlt: mentalAltLine(coach, res),
         upsell: pro ? upsellBtn(utmUrl(pro.url, null, res), 'pro', 'Upgrade to ' + (coach === 'hunter' ? 'HUNTHROW' : 'Pro'), 'Want it every week? Train with ' + COACH_NAMES[coach] + ' for $100/mo.') : ''
       });
     }
@@ -1414,7 +1425,7 @@
       html = resultBlock({
         name: p.name, price: '$100/mo', result: res,
         desc: "Ongoing 1-on-1 coaching with " + COACH_NAMES[coach] + " — a complete system built around your full game, not a quick fix.",
-        ctaText: 'Get ' + p.name.split(' w/')[0], ctaUrl: utmUrl(p.url, null, res), matched: matchedLine(coach),
+        ctaText: 'Get ' + p.name.split(' w/')[0], ctaUrl: utmUrl(p.url, null, res), matched: matchedLine(coach), mentalAlt: mentalAltLine(coach, res),
         secondary: variant
           ? '<div class="also-row">Not ready for weekly? <a href="' + utmUrl(PRODUCTS.compete.base, variant, res) + '" target="_top" data-product="compete">Start with Compete w/ ' + COACH_NAMES[coach] + '</a></div>'
           : ''
