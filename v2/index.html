@@ -239,7 +239,8 @@
   .coaches .hero-glow{left:auto; right:-420px; top:-300px; bottom:auto; opacity:.6;}
   .coach-grid{display:grid; grid-template-columns:1fr; gap:18px;}
   @media (min-width:560px){ .coach-grid{grid-template-columns:1fr 1fr;} }
-  @media (min-width:1040px){ .coach-grid{grid-template-columns:repeat(4,1fr);} }
+  @media (min-width:1040px){ .coach-grid{grid-template-columns:repeat(3,1fr);} }
+  @media (min-width:1180px){ .coach-grid{grid-template-columns:repeat(5,1fr);} }
   .coach{background:var(--ink-3); border:1px solid var(--line); border-radius:18px; overflow:hidden; display:flex; flex-direction:column; transition:transform .2s ease, border-color .2s ease;}
   .coach:hover{transform:translateY(-5px); border-color:rgba(243,108,33,.5);}
   .coach-media{position:relative; aspect-ratio:1/1; overflow:hidden; background:#222;}
@@ -364,6 +365,7 @@
   .quiz-close{width:48px; height:48px;}
   .back-link{min-height:48px; display:inline-flex; align-items:center;}
   .gate-sub{color:var(--muted); font-size:16.5px; margin:-10px 0 20px;}
+  .field[hidden]{display:none;}
   .field{display:block; font-size:14px; font-weight:600; color:var(--muted); margin-bottom:14px;}
   .field input{
     display:block; width:100%; margin-top:7px; min-height:54px; padding:14px 16px;
@@ -386,6 +388,50 @@
   .result-proof{margin-top:18px; padding-top:16px; border-top:1px solid var(--line); font-size:14px; color:var(--muted);}
   .result-quote{display:block; margin-top:8px; color:#D8D8DC; font-style:italic;}
   .result-guardian{margin-top:18px; background:rgba(255,255,255,.06); border:1px solid var(--line); border-radius:12px; padding:14px; font-size:15.5px; color:#fff;}
+
+  /* multi-select question */
+  .q-hint{color:var(--muted); font-size:15px; margin:-14px 0 16px;}
+  .options.multi .opt{padding-right:60px;}
+  .options.multi .tick{
+    position:absolute; right:16px; top:50%; transform:translateY(-50%);
+    width:26px; height:26px; border-radius:8px; border:2px solid rgba(255,255,255,.28); background:rgba(0,0,0,.2);
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .options.multi .opt.selected .tick{background:var(--orange); border-color:var(--orange);}
+  .options.multi .opt.selected .tick::after{
+    content:""; position:absolute; left:8px; top:3px; width:7px; height:13px;
+    border:solid #fff; border-width:0 3px 3px 0; transform:rotate(45deg);
+  }
+  #problemNext{margin:6px 0 4px; min-height:56px;}
+  #problemNext[disabled]{opacity:.45; box-shadow:none; cursor:default;}
+
+  /* "matching you" animation */
+  #panel-matching .matching{display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:48px 0 36px; min-height:320px;}
+  .matching-logo{position:relative; width:146px; height:146px; display:grid; place-items:center; animation:logoPulse 1.5s ease-in-out infinite;}
+  .matching-logo::before{
+    content:""; position:absolute; inset:0; border-radius:50%;
+    border:4px solid rgba(255,255,255,.1); border-top-color:var(--orange); border-right-color:var(--amber);
+    animation:ringSpin 1s linear infinite;
+  }
+  .matching-logo img{height:92px; width:auto; filter:drop-shadow(0 10px 30px rgba(243,108,33,.5));}
+  @keyframes ringSpin{to{transform:rotate(360deg);}}
+  @keyframes logoPulse{0%,100%{transform:scale(1);} 50%{transform:scale(1.06);}}
+  .matching-text{margin-top:26px; font-family:var(--display); font-weight:800; font-size:26px; text-transform:uppercase; letter-spacing:.04em; color:#fff;}
+  .matching-bar{margin-top:20px; width:min(260px,70%); height:6px; border-radius:4px; background:rgba(255,255,255,.1); overflow:hidden;}
+  .matching-bar span{display:block; height:100%; width:0; border-radius:4px; background:linear-gradient(90deg,var(--amber),var(--orange)); animation:matchFill 2s ease-in-out forwards;}
+  @keyframes matchFill{0%{width:4%;} 60%{width:72%;} 100%{width:100%;}}
+
+  /* upgrade CTA that pulses */
+  .upsell{margin-top:16px; text-align:center;}
+  .upsell-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; min-height:56px;
+    padding:14px 22px; border-radius:12px; border:2px solid var(--orange); background:rgba(243,108,33,.14); color:#fff;
+    font-family:var(--display); font-weight:800; font-size:20px; letter-spacing:.05em; text-transform:uppercase;
+    animation:upsellPop 1.8s ease-in-out infinite; transform-origin:center;
+  }
+  .upsell-btn:hover{background:rgba(243,108,33,.28);}
+  .upsell-note{display:block; margin-top:8px; font-size:13.5px; color:var(--muted); letter-spacing:0; text-transform:none; font-family:var(--body); font-weight:500;}
+  @keyframes upsellPop{0%,100%{transform:scale(1);} 50%{transform:scale(1.045);}}
 
   /* reveal on scroll */
   .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
@@ -539,7 +585,7 @@
         <div class="kicker">Coaches</div>
         <h2 class="display">Meet your<br><span class="hot">coaches</span></h2>
       </div>
-      <p class="sub">They compete at the ACL Pro level. Now they coach you.</p>
+      <p class="sub">Five coaches who compete at the ACL Pro level. Now they coach you.</p>
     </div>
     <div class="coach-grid">
       <div class="coach reveal">
@@ -588,13 +634,31 @@
         <div class="coach-media">
           <img src="../assets/img/coach-hunter.jpg" alt="Hunter Thorson" width="480" height="480" loading="lazy">
           <img class="action" src="../assets/img/action-hunter.jpg" alt="" width="600" height="600" loading="lazy">
-          <div class="coach-name"><div class="nick">&nbsp;</div><h3>Hunter Thorson</h3></div>
+          <div class="coach-name"><div class="nick">HUNTHROW</div><h3>Hunter Thorson</h3></div>
         </div>
         <div class="coach-body">
-          <div class="spec">1-on-1 coaching</div>
-          <p>Personalized coaching from Hunter.</p>
-          <div class="soon">Pro tier coming soon. Train with him now through Compete.</div>
-          <a class="btn btn-ghost btn-block" id="cta-coach-hunter" target="_top">Get Compete w/ Hunter</a>
+          <div class="spec">Throw · Read · Perform</div>
+          <p>Sharpen the throw you already have, then learn to read the board.</p>
+          <div class="coach-actions">
+            <a class="btn btn-primary" id="cta-coach-hunter" target="_top">View coach</a>
+            <a class="btn btn-ghost" href="#" id="cta-onetime-hunter" target="_top">Book a call</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="coach reveal">
+        <div class="coach-media">
+          <img src="../assets/img/coach-payton.jpg" alt="Payton Haynes" width="480" height="480" loading="lazy">
+          <img class="action" src="../assets/img/action-payton.jpg" alt="" width="600" height="600" loading="lazy">
+          <div class="coach-name"><div class="nick">Payton's Playbook</div><h3>Payton Haynes</h3></div>
+        </div>
+        <div class="coach-body">
+          <div class="spec">Mechanics &amp; mindset</div>
+          <p>Know your game, build your options, trust your next throw.</p>
+          <div class="coach-actions">
+            <a class="btn btn-primary" id="cta-coach-payton" target="_top">View coach</a>
+            <a class="btn btn-ghost" href="#" id="cta-onetime-payton" target="_top">Book a call</a>
+          </div>
         </div>
       </div>
     </div>
@@ -688,14 +752,18 @@
       <div class="quiz-panel" id="panel-problem">
         <div class="progress-row"><div class="progress-track"><div class="progress-fill"></div></div><div class="progress-text"></div></div>
         <h3 class="q-text">What's costing you the most points?</h3>
-        <div class="options">
-          <button class="opt" data-key="problem" data-val="release">My release isn't consistent<span class="arrow">→</span></button>
-          <button class="opt" data-key="problem" data-val="slide">Bags won't stay in the lane<span class="sub">They slide off or hang up</span><span class="arrow">→</span></button>
-          <button class="opt" data-key="problem" data-val="airmail">My airmail isn't reliable<span class="arrow">→</span></button>
-          <button class="opt" data-key="problem" data-val="blockpush">Can't block or push when I need to<span class="arrow">→</span></button>
-          <button class="opt" data-key="problem" data-val="pressure">I tighten up under pressure<span class="arrow">→</span></button>
-          <button class="opt" data-key="problem" data-val="unknown">Honestly, I don't know<span class="arrow">→</span></button>
+        <p class="q-hint">Pick everything that sounds like you.</p>
+        <div class="options multi">
+          <button class="opt" data-key="problem" data-val="release">My release isn't consistent<span class="tick" aria-hidden="true"></span></button>
+          <button class="opt" data-key="problem" data-val="line">I can't find a consistent line<span class="tick" aria-hidden="true"></span></button>
+          <button class="opt" data-key="problem" data-val="flat">I can't get a flat bag<span class="tick" aria-hidden="true"></span></button>
+          <button class="opt" data-key="problem" data-val="grip">Can't find a grip that works for me<span class="tick" aria-hidden="true"></span></button>
+          <button class="opt" data-key="problem" data-val="airmail">My airmail isn't reliable<span class="tick" aria-hidden="true"></span></button>
+          <button class="opt" data-key="problem" data-val="blockpush">Can't block or push when I need to<span class="tick" aria-hidden="true"></span></button>
+          <button class="opt" data-key="problem" data-val="mental">Mental game<span class="sub">Nerves, focus, tightening up under pressure</span><span class="tick" aria-hidden="true"></span></button>
+          <button class="opt" data-key="problem" data-val="unknown">Honestly, I don't know<span class="tick" aria-hidden="true"></span></button>
         </div>
+        <button class="btn btn-primary btn-block" id="problemNext" disabled>Continue →</button>
         <button class="back-link" data-back>← Back</button>
       </div>
 
@@ -738,13 +806,22 @@
         <div class="progress-row"><div class="progress-track"><div class="progress-fill"></div></div><div class="progress-text"></div></div>
         <h3 class="q-text" id="q6-heading">Which coaching style sounds like you?</h3>
         <div class="options">
-          <button class="opt" data-key="coach" data-val="colin">Colin Hodet<span class="sub">The Roll King. Precision &amp; shot-making</span><span class="arrow">→</span></button>
-          <button class="opt" data-key="coach" data-val="richard">Richard Nyberg<span class="sub">Full-system coaching</span><span class="arrow">→</span></button>
+          <button class="opt" data-key="coach" data-val="richard">Richard Nyberg<span class="sub">"Mr. 11" · Full-system coaching</span><span class="arrow">→</span></button>
+          <button class="opt" data-key="coach" data-val="colin">Colin Hodet<span class="sub">The Roll King · Precision &amp; shot-making</span><span class="arrow">→</span></button>
           <button class="opt" data-key="coach" data-val="aj">AJ Sims<span class="sub">Competition-focused</span><span class="arrow">→</span></button>
-          <button class="opt" data-key="coach" data-val="hunter" id="coach-opt-hunter" hidden>Hunter Thorson<span class="sub">1-on-1 coaching</span><span class="arrow">→</span></button>
-          <button class="opt" data-key="coach" data-val="match">Just match me with the best fit<span class="arrow">→</span></button>
+          <button class="opt" data-key="coach" data-val="hunter">Hunter Thorson<span class="sub">HUNTHROW · Throw, read, perform</span><span class="arrow">→</span></button>
+          <button class="opt" data-key="coach" data-val="payton">Payton Haynes<span class="sub">Payton's Playbook · Mechanics &amp; mindset</span><span class="arrow">→</span></button>
+          <button class="opt opt-match" data-key="coach" data-val="match">Just match me with the best fit<span class="sub">We'll read your answers and pick</span><span class="arrow">→</span></button>
         </div>
         <button class="back-link" data-back id="coach-back-link">← Back</button>
+      </div>
+
+      <div class="quiz-panel" id="panel-matching">
+        <div class="matching">
+          <div class="matching-logo"><img src="../assets/img/logo.png" alt="" width="300" height="332"></div>
+          <div class="matching-text" id="matchingText">Reading your answers…</div>
+          <div class="matching-bar"><span></span></div>
+        </div>
       </div>
 
       <div class="quiz-panel" id="panel-age">
@@ -844,7 +921,9 @@
     pro: {
       richard: { url: DOMAIN + '/products/elite-plan-19-99-month-copy', name: 'Pro Plan w/ Richard Nyberg' },
       colin: { url: DOMAIN + '/products/roll-king-development', name: 'Roll King Development w/ Colin Hodet' },
-      aj: { url: DOMAIN + '/products/ajency-monthly', name: 'AJency Monthly w/ AJ Sims' }
+      aj: { url: DOMAIN + '/products/ajency-monthly', name: 'AJency Monthly w/ AJ Sims' },
+      hunter: { url: DOMAIN + '/products/hunthrow-monthly-w-hunter-thorson-100-month', name: 'HUNTHROW Monthly w/ Hunter Thorson' },
+      payton: { url: DOMAIN + '/products/paytons-playbook-monthly', name: "Payton's Playbook Monthly w/ Payton Haynes" }
     },
     oneTimeCoach: {
       richard: {
@@ -860,11 +939,16 @@
         review: { url: DOMAIN + '/products/aj-video-game-review-call', name: 'AJ Sims — Video Review + Call', price: '$75 one-time' }
       },
       hunter: {
-        call: { url: DOMAIN + '/products/hunter-thorson-1-hour-session', name: 'Hunter Thorson — 1 Hour Session', price: '$45 one-time' }
+        call: { url: DOMAIN + '/products/hunter-thorson-1-hour-session', name: 'Hunter Thorson — Throw Tune-Up', price: '$50 one-time' },
+        review: { url: DOMAIN + '/products/hunter-thorson-read-perform-breakdown', name: 'Hunter Thorson — Read & Perform Breakdown', price: '$75 one-time' }
+      },
+      payton: {
+        call: { url: DOMAIN + '/products/paytons-playbook-session', name: "Payton Haynes — Playbook Session", price: '$50 one-time' },
+        review: { url: DOMAIN + '/products/paytons-playbook-game-breakdown', name: "Payton Haynes — Personal Game Breakdown", price: '$75 one-time' }
       }
     }
   };
-  const COACH_NAMES = { richard:'Richard Nyberg', colin:'Colin Hodet', aj:'AJ Sims', hunter:'Hunter Thorson' };
+  const COACH_NAMES = { richard:'Richard Nyberg', colin:'Colin Hodet', aj:'AJ Sims', hunter:'Hunter Thorson', payton:'Payton Haynes' };
 
   /* ---------------- Meta Pixel ---------------- */
   (function(){
@@ -897,24 +981,37 @@
   };
   const PROBLEM_LABEL = {
     release: 'an inconsistent release',
-    slide: 'bags that slide out of the lane',
+    line: 'no consistent line',
+    flat: 'bags that won\'t lay flat',
+    grip: 'a grip that doesn\'t work for you',
     airmail: 'an unreliable airmail',
     blockpush: 'not having a block or push',
-    pressure: 'tightening up under pressure',
+    mental: 'the mental game',
     unknown: 'not knowing what to fix'
   };
   const DIAGNOSIS = {
     release: 'The release is the foundation. Fix it and everything else gets easier.',
-    slide: 'Your slide game needs a consistent launch and lane control.',
+    line: 'A repeatable line comes from a consistent launch and lane control.',
+    flat: 'A flat bag is hand position and release angle. Small fix, big payoff.',
+    grip: 'The right grip is personal. A coach finds yours fast and locks it in.',
     airmail: 'A reliable airmail is a release + arc problem. Very fixable.',
     blockpush: 'Blocking and pushing win close games. Time to add them to your arsenal.',
-    pressure: 'Pressure is a routine problem, not a talent problem.',
+    mental: 'Pressure is a routine problem, not a talent problem.',
     unknown: "That's normal. A coach seeing your throw finds it fast."
   };
+  const PROBLEM_COACH = {
+    release: 'richard', unknown: 'richard',
+    line: 'colin', flat: 'colin', airmail: 'colin',
+    blockpush: 'aj',
+    grip: 'hunter',
+    mental: 'payton'
+  };
   const MATCH_REASON = {
-    colin: 'he rebuilds slide and airmail shots from the launch up',
-    aj: 'he coaches tournament nerves and real matchups',
-    richard: 'he rebuilds mechanics from the release out'
+    colin: 'he rebuilds line and airmail shots from the launch up',
+    aj: 'he coaches tournament prep and real matchups',
+    richard: 'he rebuilds the full game from the release out',
+    hunter: 'he starts with your grip, stance and release, then builds around it',
+    payton: 'she coaches the mental side: confidence, routine and bouncing back'
   };
   const TESTIMONIAL = '"Best $100 I\'ve ever spent. Went from a 7 to a 9." — Compete Member';
 
@@ -960,7 +1057,7 @@
   }
   function showPanel(id, isBack){
     hideAllPanels();
-    if (!isBack && current && current !== id) stack.push(current);
+    if (!isBack && current && current !== id && current !== 'matching') stack.push(current);
     current = id;
     paintProgress(id);
     const p = panelEl(id);
@@ -1006,16 +1103,38 @@
     btn.addEventListener('click', function(){
       const key = this.dataset.key, val = this.dataset.val;
       const panel = this.closest('.quiz-panel');
+      const multi = !!this.closest('.options.multi');
+      if (multi) {
+        if (val === 'unknown') {
+          panel.querySelectorAll('.opt').forEach(o => { if (o !== this) o.classList.remove('selected'); });
+          this.classList.toggle('selected');
+        } else {
+          const none = panel.querySelector('.opt[data-val="unknown"]');
+          if (none) none.classList.remove('selected');
+          this.classList.toggle('selected');
+        }
+        const picked = [...panel.querySelectorAll('.opt.selected')].map(o => o.dataset.val);
+        const next = document.getElementById('problemNext');
+        next.disabled = picked.length === 0;
+        next.textContent = picked.length > 1 ? 'Continue with ' + picked.length + ' →' : 'Continue →';
+        return;
+      }
       panel.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
       this.classList.add('selected');
       setTimeout(() => answer(key, val), 180);
     });
   });
+  document.getElementById('problemNext').addEventListener('click', function(){
+    const picked = [...document.querySelectorAll('#panel-problem .opt.selected')].map(o => o.dataset.val);
+    if (!picked.length) return;
+    answer('problem', picked);
+  });
   document.querySelectorAll('[data-back]').forEach(b => b.addEventListener('click', goBack));
 
   function answer(key, val){
     state[key] = val;
-    px('QuizStep', key === 'age' ? {step: stepNumber(current), key: key} : {step: stepNumber(current), key: key, value: val});
+    const pxVal = Array.isArray(val) ? val.join(',') : val;
+    px('QuizStep', key === 'age' ? {step: stepNumber(current), key: key} : {step: stepNumber(current), key: key, value: pxVal});
 
     if (key === 'goal')     return showPanel('level');
     if (key === 'level')    return showPanel('problem');
@@ -1031,7 +1150,10 @@
       if (val === 'video') return showPanel('age');
       return goToCoachPanel();
     }
-    if (key === 'coach')    return showPanel('age');
+    if (key === 'coach') {
+      if (val === 'match') return runMatching();
+      return showPanel('age');
+    }
 
     if (key === 'age') {
       if (val === 'u13') return showResult();     // no email gate, no data collected
@@ -1039,11 +1161,19 @@
     }
   }
 
+  function runMatching(){
+    const lines = ['Reading your answers…', 'Checking coach styles…', 'Building your plan…'];
+    const el = document.getElementById('matchingText');
+    el.textContent = lines[0];
+    showPanel('matching');
+    let i = 0;
+    const timer = setInterval(function(){ i++; if (lines[i]) el.textContent = lines[i]; }, 620);
+    setTimeout(function(){ clearInterval(timer); showPanel('age'); }, 2000);
+  }
+
   function goToCoachPanel(){
     const heading = document.getElementById('q6-heading');
     const matchOpt = document.querySelector('#panel-coach .opt[data-val="match"]');
-    const hunterOpt = document.getElementById('coach-opt-hunter');
-    hunterOpt.hidden = state.style !== 'structured';
     if (state.style === 'onetime') {
       const typeLabel = state.onetime === 'call' ? 'call' : (state.onetime === 'both' ? 'video + call' : 'session');
       heading.textContent = 'Want your ' + typeLabel + ' with a specific coach?';
@@ -1056,14 +1186,24 @@
   }
 
   /* ---------------- smart match ---------------- */
+  function problems(){ return Array.isArray(state.problem) ? state.problem : (state.problem ? [state.problem] : []); }
+  function topProblem(){ const p = problems(); return p.length ? p[0] : null; }
   function pickCoach(){
     const c = state.coach;
     if (c && c !== 'match') return c;
-    const p = state.problem;
-    if (p === 'slide' || p === 'airmail') return 'colin';
-    if (p === 'pressure') return 'aj';
-    if (state.goal === 'local' && (state.level === 'comp' || state.level === 'acl')) return 'aj';
-    return 'richard';
+    const picks = problems();
+    const score = {richard: 0, colin: 0, aj: 0, hunter: 0, payton: 0};
+    picks.forEach(function(p){ const coach = PROBLEM_COACH[p]; if (coach) score[coach] += 1; });
+    if (state.goal === 'local' && (state.level === 'comp' || state.level === 'acl')) score.aj += 1;
+    const COACH_ORDER = ['richard','colin','aj','hunter','payton'];
+    let best = null, bestScore = -1;
+    COACH_ORDER.forEach(function(k){ if (score[k] > bestScore) { bestScore = score[k]; best = k; } });
+    const tied = COACH_ORDER.filter(function(k){ return score[k] === bestScore; });
+    if (tied.length > 1) {
+      const first = picks.map(function(p){ return PROBLEM_COACH[p]; }).filter(function(k){ return tied.indexOf(k) !== -1; })[0];
+      return first || tied[0];
+    }
+    return bestScore > 0 ? best : 'richard';
   }
   function matchedLine(coach){
     if (state.coach && state.coach !== 'match') return '';
@@ -1085,7 +1225,8 @@
       quiz_coach: coach || '',
       goal: state.goal || '',
       level: state.level || '',
-      problem: state.problem || '',
+      problem: problems().join(', '),
+      problem_top: topProblem() || '',
       practice: state.practice || '',
       style: state.style || '',
       age: state.age || '',
@@ -1174,19 +1315,27 @@
     if (state.style === 'onetime') {
       if (state.onetime === 'video') return {result: 'video', coach: ''};
       if (state.onetime === 'call') return {result: 'call', coach: coach};
-      if (state.onetime === 'both') return {result: coach === 'hunter' ? 'call' : 'review_call', coach: coach};
+      if (state.onetime === 'both') return {result: 'review_call', coach: coach};
     }
-    if (state.style === 'structured') return {result: 'compete', coach: coach};
-    if (state.style === 'intensive') return {result: coach === 'hunter' ? 'compete' : 'pro', coach: coach};
+    if (state.style === 'structured') return {result: coach === 'payton' ? 'pro' : 'compete', coach: coach};
+    if (state.style === 'intensive') return {result: 'pro', coach: coach};
     return {result: 'elite', coach: ''};
   }
 
   function resultBlock(o){
-    const playback = state.level && state.practice && state.problem
+    const picks = problems();
+    const labels = picks.map(function(p){ return PROBLEM_LABEL[p]; }).filter(Boolean);
+    let list = '';
+    if (labels.length === 1) list = labels[0] + ' is';
+    else if (labels.length === 2) list = labels[0] + ' and ' + labels[1] + ' are';
+    else if (labels.length > 2) list = labels.slice(0, -1).join(', ') + ' and ' + labels[labels.length - 1] + ' are';
+    const playback = (state.level && state.practice && labels.length)
       ? '<div class="result-playback">You\'re a ' + LEVEL_LABEL[state.level] + ' player throwing ' + PRACTICE_LABEL[state.practice] +
-        ', and ' + PROBLEM_LABEL[state.problem] + ' is costing you the most points.</div>'
+        ', and ' + list + ' costing you the most points.</div>'
       : '';
-    const diagnosis = state.problem ? '<div class="result-diagnosis">' + DIAGNOSIS[state.problem] + '</div>' : '';
+    const diagnosis = picks.slice(0, 3).map(function(p){
+      return DIAGNOSIS[p] ? '<div class="result-diagnosis">' + DIAGNOSIS[p] + '</div>' : '';
+    }).join('');
     const start = '<div class="result-start"><b>Join by Sunday</b> and you start Monday, ' + nextMonday() + '.</div>';
     return '<div class="result-eyebrow">YOUR BEST MATCH</div>' +
       '<div class="result-name">' + o.name + '</div>' +
@@ -1195,8 +1344,13 @@
       '<div class="result-desc">' + o.desc + '</div>' +
       start +
       '<a class="btn btn-primary btn-block" href="' + o.ctaUrl + '" target="_top" data-product="' + o.result + '">' + o.ctaText + '</a>' +
+      (o.upsell || '') +
       (o.secondary || '') +
       '<div class="result-proof">500+ players coached · +2 PPR average gain in month one<span class="result-quote">' + TESTIMONIAL + '</span></div>';
+  }
+  function upsellBtn(url, product, text, note){
+    return '<div class="upsell"><a class="upsell-btn" href="' + url + '" target="_top" data-product="' + product + '">' + text +
+      '</a>' + (note ? '<span class="upsell-note">' + note + '</span>' : '') + '</div>';
   }
 
   function showResult(){
@@ -1214,34 +1368,35 @@
           name: p.name, price: p.price, result: res,
           desc: "A personalized breakdown of your throw or game — what's working, what to fix. No subscription, no call needed.",
           ctaText: 'Get your review', ctaUrl: utmUrl(p.url, null, res),
-          secondary: '<div class="also-row">Want to track progress over time? <a href="' + utmUrl(PRODUCTS.videoBundle.url, null, res) + '" target="_top" data-product="video_bundle">Grab the 3-pack instead</a> for ' + PRODUCTS.videoBundle.price + '.</div>'
+          upsell: upsellBtn(utmUrl(PRODUCTS.videoBundle.url, null, res), 'video_bundle', 'Upgrade to the 3-pack', 'Track progress over time for ' + PRODUCTS.videoBundle.price + '.')
         });
-      } else if (type === 'call' || (type === 'both' && coach === 'hunter')) {
-        if (coach === 'hunter') {
-          const p = PRODUCTS.oneTimeCoach.hunter.call;
-          html = resultBlock({
-            name: p.name, price: p.price, result: res,
-            desc: "A live 1-hour session with Hunter — work through whatever's holding your game back right now.",
-            ctaText: 'Book your session', ctaUrl: utmUrl(p.url, null, res), matched: matchedLine(coach)
-          });
-        } else {
-          const p = PRODUCTS.oneTimeCoach[coach].call;
-          html = resultBlock({
-            name: p.name, price: p.price, result: res,
-            desc: "A focused 30-minute call with " + COACH_NAMES[coach] + " — talk through mechanics, strategy, or whatever's on your mind. No video needed.",
-            ctaText: 'Book your call', ctaUrl: utmUrl(p.url, null, res), matched: matchedLine(coach)
-          });
-        }
+      } else if (type === 'call') {
+        const p = PRODUCTS.oneTimeCoach[coach].call;
+        const who = coach === 'payton' ? 'she' : 'he';
+        html = resultBlock({
+          name: p.name, price: p.price, result: res,
+          desc: "A focused live session with " + COACH_NAMES[coach] + " — talk through mechanics, strategy, or whatever's on your mind. No video needed.",
+          ctaText: 'Book your session', ctaUrl: utmUrl(p.url, null, res), matched: matchedLine(coach)
+        });
       } else {
         const review = PRODUCTS.oneTimeCoach[coach].review;
         const call = PRODUCTS.oneTimeCoach[coach].call;
         html = resultBlock({
           name: review.name, price: review.price, result: res,
-          desc: "Send " + COACH_NAMES[coach] + " a video of your throw or game — he reviews it before your 30-minute call, so you get real feedback instead of just a conversation.",
+          desc: "Send " + COACH_NAMES[coach] + " a video of your throw or game — " + (coach === 'payton' ? 'she' : 'he') + " reviews it before your call, so you get real feedback instead of just a conversation.",
           ctaText: 'Get the video + call', ctaUrl: utmUrl(review.url, null, res), matched: matchedLine(coach),
           secondary: '<div class="also-row">Just want the call, no video? <a href="' + utmUrl(call.url, null, res) + '" target="_top" data-product="call">' + call.name.split(' — ')[1] + ' for ' + call.price + '</a></div>'
         });
       }
+    }
+    else if (state.style === 'structured' && coach === 'payton') {
+      const p = PRODUCTS.pro.payton;
+      html = resultBlock({
+        name: "Payton's Playbook Monthly", price: '$100/mo', result: res,
+        desc: "Personalized 1-on-1 coaching with Payton Haynes — mechanics, shot options, strategy and the mental side. Payton doesn't have a $45 monthly option, this is her program.",
+        ctaText: "Get Payton's Playbook", ctaUrl: utmUrl(p.url, null, res), matched: matchedLine(coach),
+        secondary: '<div class="also-row">Want the $45/mo option? <a href="' + utmUrl(PRODUCTS.compete.base, null, res) + '" target="_top" data-product="compete">Compete with another coach</a></div>'
+      });
     }
     else if (state.style === 'structured') {
       const variant = PRODUCTS.compete.variants[coach];
@@ -1250,25 +1405,20 @@
         name: 'Compete Membership w/ ' + COACH_NAMES[coach], price: PRODUCTS.compete.price, result: res,
         desc: "Full training library, weekly drills, stat tracking, and one 30-minute call a month with " + COACH_NAMES[coach] + ".",
         ctaText: 'Get Compete', ctaUrl: utmUrl(PRODUCTS.compete.base, variant, res), matched: matchedLine(coach),
-        secondary: pro ? '<div class="also-row">Want it every week? <a href="' + utmUrl(pro.url, null, res) + '" target="_top" data-product="pro">Go Pro with ' + COACH_NAMES[coach] + '</a></div>' : ''
+        upsell: pro ? upsellBtn(utmUrl(pro.url, null, res), 'pro', 'Upgrade to ' + (coach === 'hunter' ? 'HUNTHROW' : 'Pro'), 'Want it every week? Train with ' + COACH_NAMES[coach] + ' for $100/mo.') : ''
       });
     }
     else if (state.style === 'intensive') {
-      if (coach === 'hunter') {
-        html = resultBlock({
-          name: "Hunter's Pro Coaching", price: 'Coming soon', result: res,
-          desc: "Hunter's 1-on-1 program isn't live yet. In the meantime, Compete Membership gets you monthly calls with him right now.",
-          ctaText: 'Get Compete w/ Hunter', ctaUrl: utmUrl(PRODUCTS.compete.base, PRODUCTS.compete.variants.hunter, res), matched: matchedLine(coach)
-        });
-      } else {
-        const p = PRODUCTS.pro[coach];
-        html = resultBlock({
-          name: p.name, price: '$100/mo', result: res,
-          desc: "Ongoing 1-on-1 coaching with " + COACH_NAMES[coach] + " — a complete system built around your full game, not a quick fix.",
-          ctaText: 'Get ' + p.name.split(' w/')[0], ctaUrl: utmUrl(p.url, null, res), matched: matchedLine(coach),
-          secondary: '<div class="also-row">Not ready for weekly? <a href="' + utmUrl(PRODUCTS.compete.base, PRODUCTS.compete.variants[coach], res) + '" target="_top" data-product="compete">Start with Compete w/ ' + COACH_NAMES[coach] + '</a></div>'
-        });
-      }
+      const p = PRODUCTS.pro[coach];
+      const variant = PRODUCTS.compete.variants[coach];
+      html = resultBlock({
+        name: p.name, price: '$100/mo', result: res,
+        desc: "Ongoing 1-on-1 coaching with " + COACH_NAMES[coach] + " — a complete system built around your full game, not a quick fix.",
+        ctaText: 'Get ' + p.name.split(' w/')[0], ctaUrl: utmUrl(p.url, null, res), matched: matchedLine(coach),
+        secondary: variant
+          ? '<div class="also-row">Not ready for weekly? <a href="' + utmUrl(PRODUCTS.compete.base, variant, res) + '" target="_top" data-product="compete">Start with Compete w/ ' + COACH_NAMES[coach] + '</a></div>'
+          : ''
+      });
     }
     else {
       const p = PRODUCTS.elite;
@@ -1276,8 +1426,8 @@
         name: p.name, price: p.price, result: res,
         desc: "Full access to the Level Up training library and structured drills — built for players who want to put the work in on their own terms.",
         ctaText: 'Get Elite', ctaUrl: utmUrl(p.url, null, res),
-        secondary: state.problem === 'unknown'
-          ? '<div class="also-row">Not sure what to fix? <a href="' + utmUrl(PRODUCTS.videoSingle.url, null, res) + '" target="_top" data-product="video">Add a Video Breakdown (' + PRODUCTS.videoSingle.price + ')</a></div>'
+        upsell: problems().indexOf('unknown') !== -1
+          ? upsellBtn(utmUrl(PRODUCTS.videoSingle.url, null, res), 'video', 'Add a Video Breakdown', 'Not sure what to fix? Get it looked at for ' + PRODUCTS.videoSingle.price + '.')
           : ''
       });
     }
@@ -1309,7 +1459,10 @@
     document.getElementById('cta-coach-richard').href = utmUrl(PRODUCTS.pro.richard.url);
     document.getElementById('cta-coach-colin').href = utmUrl(PRODUCTS.pro.colin.url);
     document.getElementById('cta-coach-aj').href = utmUrl(PRODUCTS.pro.aj.url);
-    document.getElementById('cta-coach-hunter').href = utmUrl(PRODUCTS.compete.base, PRODUCTS.compete.variants.hunter);
+    document.getElementById('cta-coach-hunter').href = utmUrl(PRODUCTS.pro.hunter.url);
+    document.getElementById('cta-coach-payton').href = utmUrl(PRODUCTS.pro.payton.url);
+    document.getElementById('cta-onetime-hunter').href = utmUrl(PRODUCTS.oneTimeCoach.hunter.call.url);
+    document.getElementById('cta-onetime-payton').href = utmUrl(PRODUCTS.oneTimeCoach.payton.call.url);
     document.getElementById('cta-onetime-richard').href = utmUrl(PRODUCTS.oneTimeCoach.richard.call.url);
     document.getElementById('cta-onetime-colin').href = utmUrl(PRODUCTS.oneTimeCoach.colin.call.url);
     document.getElementById('cta-onetime-aj').href = utmUrl(PRODUCTS.oneTimeCoach.aj.call.url);
