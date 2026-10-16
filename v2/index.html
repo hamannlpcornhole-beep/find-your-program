@@ -1400,7 +1400,13 @@
     const fit = '<div class="r-section"><div class="r-label">Why this fits</div><div class="r-fit">' + o.desc + '</div>' +
       (o.matched || '') + (o.mentalAlt || '') + '</div>';
 
-    const start = '<div class="result-start"><b>Join by Sunday</b> and you start Monday, ' + nextMonday() + '.</div>';
+    // Pro starts on the next Monday; Elite and Compete start the moment you buy
+    let start = '';
+    if (o.result === 'pro') {
+      start = '<div class="result-start"><b>Join by Sunday</b> and you start Monday, ' + nextMonday() + '.</div>';
+    } else if (o.result === 'elite' || o.result === 'compete') {
+      start = '<div class="result-start"><b>Starts the day you buy it.</b> Log in and train tonight.</div>';
+    }
 
     return '<div class="result-eyebrow">YOUR BEST MATCH</div>' +
       head +
